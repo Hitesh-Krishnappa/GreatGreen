@@ -5,3 +5,6 @@ node_modules
 config.js
 uploads
 
+
+dev-dist
+.vite
