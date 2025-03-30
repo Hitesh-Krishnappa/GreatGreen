@@ -174,7 +174,7 @@ classDiagram
   User "1"*--"0..n" UserBadges
   Badge "1"*--"*" UserBadges
 
-
+```
 ## Screenshots
 ![Login](/docs/snapshots/login.png)
 
