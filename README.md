@@ -34,9 +34,11 @@ However, despite these efforts, only 4% of the target has been completed thus fa
 * Contribute to Climate Action: Leverage reforestation and sustainable agriculture to sequester carbon and combat climate change.
   
 # How It Works
-* Seed Selection: Users choose seeds based on their planting experience and receive detailed cultivation instructions.
-* Progress Sharing: Users upload photos of their plants at weekly intervals, sharing their journey with the community.
+
+* Kit Assignment: Users are assigned a kit based on their planting experience and receive detailed cultivation instructions.
+* Progress Tracking: Users upload photos of their plants at weekly intervals, tracking their journey.
 * Yield Sharing: Upon harvest, users contribute 20% of their seeds or crops back to the project or partner organizations, helping to perpetuate the cycle of growth and support further reforestation projects.
+* Affiliation: Register as an affiliation center by preparing new kits and accepting new kit requests to help start other's journey.
 
 ## Design
 ![HighLevelCompleteUserFlow](/docs/User%20Flow%20High%20Level.jpeg)
