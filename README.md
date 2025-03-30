@@ -37,6 +37,12 @@ However, despite these efforts, only 4% of the target has been completed thus fa
 * Seed Selection: Users choose seeds based on their planting experience and receive detailed cultivation instructions.
 * Progress Sharing: Users upload photos of their plants at weekly intervals, sharing their journey with the community.
 * Yield Sharing: Upon harvest, users contribute 20% of their seeds or crops back to the project or partner organizations, helping to perpetuate the cycle of growth and support further reforestation projects.
+
+## Design
+![HighLevelCompleteUserFlow](/docs/User%20Flow%20High%20Level.jpeg)
+![CompleteUserFlow](/docs/User%20Flow%20-%20In%20Depth.jpeg)
+![How it works](/docs/How%20it%20works.png)
+
   
 # Technology Stack
 * Interactive UI: React.js for an engaging frontend.
@@ -172,12 +178,6 @@ classDiagram
   User "1"*--"0..n" UserBadges
   Badge "1"*--"*" UserBadges
 
-```
-## Workflow documentation
-![HighLevelOverview](/docs/GreatGreenHighlevel.jpeg)
-![HighLevelCompleteUserFlow](/docs/GreatGreenUserFlow.jpeg)
-
-<br/>
 
 ## Screenshots
 ![Login](/docs/snapshots/login.png)
@@ -212,3 +212,7 @@ classDiagram
   The remaining are end user endpoints which allow user to interact with the application
 
 - The user interface currently allows users to manage their journeys and contribute as well. The backend has more capabilities and functionalities.
+
+## Further Reading
+- [Desertification and Climate Change](https://www.ipcc.ch/srccl/chapter/chapter-3/)
+- [Green Wall of India](https://www.youtube.com/watch?v=pVjnuMQ0YmY)
