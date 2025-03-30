@@ -1,0 +1,24 @@
+meta {
+  name: Milestone
+  type: http
+  seq: 30
+}
+
+post {
+  url: http://localhost:3000/api/v1/journeys/661cef83f48f6d756291c50a/milestones
+  body: multipartForm
+  auth: none
+}
+
+body:json {
+  {
+    "locationY": 1,
+    "locationX": 2,
+    "address": "360 Huntington avenue, Boston, MA"
+  }
+}
+
+body:multipart-form {
+  file: @file(/Users/bhargavcn/Downloads/paper_bg.png)
+  comment: Whoo, Completed my first milestone
+}

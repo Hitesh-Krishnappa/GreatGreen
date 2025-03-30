@@ -1,0 +1,17 @@
+meta {
+  name: Create journey
+  type: http
+  seq: 22
+}
+
+post {
+  url: http://localhost:3000/api/v1/journeys
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "level": "HARD"
+  }
+}

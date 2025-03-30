@@ -1,0 +1,32 @@
+meta {
+  name: Admin Delete Plant
+  type: http
+  seq: 13
+}
+
+delete {
+  url: http://localhost:3000/api/v1/admin/plants/661b35547a4015d4cbd08ddf
+  body: json
+  auth: none
+}
+
+headers {
+  Cookie: connect.sid=s%3Ath_1VxyI96yl4eINDVRtYBUxC12Hyjls.KInt%2BV%2BLbSUbuEyZ41fa3R6fVdUL%2Fc0b96WIkd7OqPk; Path=/; HttpOnly
+}
+
+body:json {
+  {
+    "name": "Grass",
+    "yieldable": true,
+    "unit": "POUND",
+    "type": "GRASS"
+  }
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}

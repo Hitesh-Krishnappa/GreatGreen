@@ -1,0 +1,17 @@
+meta {
+  name: Patch contribution
+  type: http
+  seq: 27
+}
+
+patch {
+  url: http://localhost:3000/api/v1/journeys/661cef83f48f6d756291c50a/contributions/complete
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "value": 40
+  }
+}

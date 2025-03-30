@@ -1,0 +1,28 @@
+meta {
+  name: Admin List Addons
+  type: http
+  seq: 14
+}
+
+get {
+  url: http://localhost:3000/api/v1/admin/addons
+  body: none
+  auth: none
+}
+
+query {
+  ~startDate: 04-14-2024
+  ~keyword: sahel
+}
+
+headers {
+  Cookie: connect.sid=s%3Ath_1VxyI96yl4eINDVRtYBUxC12Hyjls.KInt%2BV%2BLbSUbuEyZ41fa3R6fVdUL%2Fc0b96WIkd7OqPk; Path=/; HttpOnly
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}

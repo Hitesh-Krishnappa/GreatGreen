@@ -1,0 +1,17 @@
+meta {
+  name: Patch journey
+  type: http
+  seq: 24
+}
+
+patch {
+  url: http://localhost:3000/api/v1/journeys/661cf0b23b3c65e9f8c6b1f6
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "status": "COMPLETED"
+  }
+}

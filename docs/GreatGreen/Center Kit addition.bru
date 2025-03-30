@@ -1,0 +1,26 @@
+meta {
+  name: Center Kit addition
+  type: http
+  seq: 21
+}
+
+post {
+  url: http://localhost:3000/api/v1/admin/centers/661ae710da45477e47dd9cc1/kits
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "kit_id": "661b49846b7c30f4467b9f48",
+    "count": 10
+  }
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}

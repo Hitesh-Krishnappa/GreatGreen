@@ -1,0 +1,33 @@
+meta {
+  name: Generate OTP
+  type: http
+  seq: 31
+}
+
+post {
+  url: http://localhost:3000/api/v1/auth/generateOTP
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "abc@gmail.com"
+  }
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

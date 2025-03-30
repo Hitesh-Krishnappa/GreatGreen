@@ -1,0 +1,35 @@
+meta {
+  name: Admin Create Center
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/api/v1/admin/centers
+  body: json
+  auth: none
+}
+
+headers {
+  Cookie: connect.sid=s%3Ath_1VxyI96yl4eINDVRtYBUxC12Hyjls.KInt%2BV%2BLbSUbuEyZ41fa3R6fVdUL%2Fc0b96WIkd7OqPk; Path=/; HttpOnly
+}
+
+body:json {
+  {
+    "name": "SAHEL Main Branch",
+    "locationY": -12.13,
+    "locationX": 13.01,
+    "email": "abc@xyz.com",
+    "active": 1,
+    "type": "UN",
+    "address": "SAHEL Main Branch, Southern Sahara, Africa"
+  }
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}

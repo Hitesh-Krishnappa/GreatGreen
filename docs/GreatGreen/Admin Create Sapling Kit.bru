@@ -1,0 +1,37 @@
+meta {
+  name: Admin Create Sapling Kit
+  type: http
+  seq: 17
+}
+
+post {
+  url: http://localhost:3000/api/v1/admin/saplingKits
+  body: json
+  auth: none
+}
+
+headers {
+  Cookie: connect.sid=s%3Ath_1VxyI96yl4eINDVRtYBUxC12Hyjls.KInt%2BV%2BLbSUbuEyZ41fa3R6fVdUL%2Fc0b96WIkd7OqPk; Path=/; HttpOnly
+}
+
+body:json {
+  {
+    "name": "Grass",
+    "preperation_instructions": [{
+      "title": "ABC",
+      "descirption": "BCD",
+      "resources": ["http://fb.com", "http://fb.co"]
+    }],
+    "journey_instructions": [],
+    "plant_id": "661b33f72023db89b11c0186",
+    "level": "EASY"
+  }
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}

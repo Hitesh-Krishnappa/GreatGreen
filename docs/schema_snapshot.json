@@ -1,0 +1,85 @@
+{
+  "user": {
+    "name": "Bhargav",
+    "password": "Bhargav",
+    "email": "Bhargav",
+    "location": "Bhargav",
+    "gender": "M|F",
+    "badges": [
+      {
+        "badge_id": 123,
+        "achieved_on": "12-10-2023 10:00:00"
+      }
+    ]
+  },
+  "journey":{
+    "id": 123,
+    "user_id": 1,
+    "provider_type": "CENTER",
+    "kit_id": 123,
+    "quantity": 12,
+    "status": "PICKED_UP",
+    "provider_id": 123,
+    "level": "MEDIUM",
+    "milestones": [
+      {
+        "url": "https://abc.com",
+        "comment": "Hello",
+        "created_on": "12-12-2020 11:00:00"
+      }
+    ],
+    "contribution": {
+      "status": "SUBMITTED",
+      "value": 200
+    },
+    "affiliation":{
+      "completed_count": 0,
+      "center_id": 1
+  }
+  },
+  "badges": {
+    "id": 1,
+    "name": "Contributor",
+    "logo": "http://abc.com"
+  },
+  "center": {
+    "id": 1,
+    "name": "UN Center, Senegal",
+    "locationX": 12.11,
+    "locationY": 12.11,
+    "address": "123, Huntington Ave, Boston MA",
+    "type": "UN|AFFILIATION",
+    "active": 0
+  },
+  "plant": {
+    "id": 1,
+    "name": "Plant A",
+    "yieldable": true,
+    "unit": "KG|COUNT|VOLUME",
+    "type": "tree|shurbs|herbs|grasses|ferns"
+  },
+  "saplingkit": {
+    "id": 1,
+    "name": "Acecia Supreme",
+    "level": "Begginer",
+    "preperation_instruction": [{
+      "id": 1,
+      "title": "How to use this",
+      "description": "First take this and that",
+      "resources": "https://123.com"
+    }],
+    "journey_instruction": [{
+      "id": 1,
+      "title": "How to use this",
+      "description": "First take this and that",
+      "resources": "https://123.com"
+    }],
+    "plant_id": 123
+  },
+  "addon": {
+    "id": 1,
+    "type": "PLUMBING|ACCESSORY",
+    "name": "Indus TMT Rod"
+  }
+}
+

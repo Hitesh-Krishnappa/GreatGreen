@@ -1,0 +1,785 @@
+openapi: 3.0.3
+info:
+  title: GreatGreen API
+  description: Interact with the resources of the GreatGreen System
+  version: 1.0.0
+servers:
+  - url: https://localhost:8080/api/v1/
+paths:
+  /auth/generateToken:
+    post:
+      tags:
+        - Authentication
+      description: Sign-up to be part of the Great Green initiative
+      operationId: generate-token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: abc@gg.org
+              required:
+                - email
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Response generated"
+                  token:
+                    type: string
+                    example: 61987asdsadaddas1
+        '400':
+          description: Invalid request data provided
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      description: Sign-up to be part of the Great Green initiative
+      operationId: sign-up
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignUpResponse'
+        '400':
+          description: Invalid request data provided
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      description: Login to be part of the Great Green initiative
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          description: On successful login sets the session ID in cookies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Invalid credentials provided
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+  /journeys:
+    get:
+      tags:
+        - Journeys
+      description: Get the list of all the journeys of the logged in user
+      operationId: get-journeys
+      parameters:
+        - name: sid
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of journeys after applying filters from the query params
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JourneysResponse'
+        '400':
+          description: Invalid request data provided
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+
+
+
+    post:
+      description: Create a new journey for the logged in and assigns a new kit
+      operationId: add-journey
+      tags:
+        - Journeys
+      parameters:
+        - name: sid
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneyRequest'
+        required: true
+      responses:
+        '200':
+          description: On creation of journey for the logged in user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Journey'
+        '400':
+          description: Cannot fullfill due to high demand / Unavailablity of centers
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  level:
+                    type: string
+                    example: Invalid level value given
+
+
+
+  /journeys/{id}:
+    patch:
+      description: Update the status of the journey
+      operationId: update-journey
+      tags:
+        - Journeys
+      parameters:
+        - name: sid
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Journey ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneyPatchRequest'
+        required: true
+      responses:
+        '200':
+          description: Update Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Journey'
+        '400':
+          description: Invalid request data provided
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+  /journeys/{id}/milestones:
+    post:
+      tags:
+        - Journeys
+      description: Create a new milestone for a journey
+      operationId: create-milestone
+      parameters:
+        - name: sid
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Journey ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MileStoneRequest'
+        required: true
+      responses:
+        '200':
+          description: Created milestone details given journey
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MileStone'
+
+  /journeys/{id}/contributions:
+    post:
+      tags:
+        - Journeys
+      description: Create a new milestone for a journey
+      operationId: create-contribution
+      parameters:
+        - name: sid
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Journey ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: number
+                  example: 20
+                
+        required: true
+      responses:
+        '200':
+          description: Created a contribution for the associated journey
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Thank You for your contribution !"
+                  contribution:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: 73687736784
+                      status:
+                        type: string
+                        enum:
+                          - IN_PROGRESS
+                          - COMPLETED
+                      value:
+                        type: number
+                        example: 20
+                    required:
+                        - _id
+                        - status
+                required:
+                  - message
+                  - contribution
+    patch:
+      tags:
+        - Journeys
+      description: Update contribution status once it is delivered to center
+      operationId: patch-contribution
+      parameters:
+        - name: sid
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Journey ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum:
+                    - IN_PROGRESS
+                    - COMPLETED
+              required:
+                - status
+                
+        required: true
+      responses:
+        '200':
+          description: Updated the status for the contribution
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Your contribution is complete"
+                  contribution:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: 73687736784
+                      status:
+                        type: string
+                        enum:
+                          - IN_PROGRESS
+                          - COMPLETED
+                      value:
+                        type: number
+                        example: 20
+                    required:
+                      - _id
+                      - status
+                required:
+                  - message
+                  - contribution
+  /auth/userinfo:
+    get:
+      tags:
+        - Authentication
+      description: Get information of the current logged in user
+      operationId: getUserInfo
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+ 
+
+components:
+  schemas:
+    SignUpRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John
+        gender:
+          type: string
+          example: MALE
+          enum:
+            - MALE
+            - FEMALE
+            - OTHERS
+        locationX:
+          type: number
+          example: -12.1
+        locationY:
+          type: number
+          example: 12.1
+        passwordConfirmation:
+          type: string
+          example: XSCSzaza==
+        password:
+          type: string
+          example: XSCSzaza==
+        email:
+          type: string
+          example: johndoe@neu.edu
+        token:
+          type: string
+          example: 123456
+      required:
+        - name
+        - gender
+        - locationX
+        - locationY
+        - password
+        - passwordConfirmation
+        - email
+        - token
+    JourneyRequest:
+      type: object
+      properties:
+        level:
+          type: string
+          description: Level of user
+          example: BEGINNER
+          enum:
+            - EASY
+            - MEDIUM
+            - HARD
+      required:
+        - level
+    JourneyPatchRequest:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the journey
+          example: PENDING
+          enum:
+            - IN_PROGRESS
+            - COMPLETED
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John
+        username:
+          type: string
+          example: abc@abc.com
+        email:
+          type: string
+          example: abc@abc.com
+        gender:
+          type: string
+          example: MALE
+          enum:
+            - MALE
+            - FEMALE
+            - OTHERS
+        locationX:
+          type: number
+          example: -12.1
+        locationY:
+          type: number
+          example: 12.1
+    MileStone:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Milestone Created
+        milestone:
+          type: object
+          properties:
+            _id:
+              type: integer
+              example: 1
+            comment:
+              type: string
+              example: Water resource available
+            url:
+              type: string
+              example: https://s3.aws.com/1hu266
+      required:
+        - message
+
+    Journey:
+      type: object
+      required: []
+      properties:
+        _id:
+          type: string
+          example: 662691f5e90a8cab23d50a69
+        user_id:
+          type: string
+          example: 662691f5e90a8cab23d50a69
+        provider:
+          type: object
+          required: []
+          properties:
+            _id:
+              type: string
+              example: 662691f5e90a8cab23d50a69
+            name:
+              type: string
+              example: Sahel Center
+            location:
+              type: object
+              required: []
+              properties:
+                type:
+                  type: string
+                  example: POINT
+                coordinates:
+                  type: array
+                  items:
+                    type: number
+                    example: [1,2]
+                _id:
+                  type: string
+                  example: 662691f5e90a8cab23d50a69
+            address:
+              type: string
+              example: Sahel Center, Africa
+            type:
+              type: string
+              example: UN
+            active:
+              type: boolean
+            createdDate:
+              type: string
+              example: "2024-04-22T17:01:00.686Z"
+            updatedAt:
+              type: string
+              example: "2024-04-22T17:01:00.686Z"
+        kit:
+          type: object
+          required: []
+          properties:
+            _id:
+              type: string
+              example: 662691f5e90a8cab23d50a69
+            name:
+              type: string
+              example: Acacia
+            preperation_instructions:
+              type: array
+              items:
+                type: object
+                required: [title]
+                properties:
+                  title:
+                    type: string
+                    example: Watering Guidelines
+                  description:
+                    type: string
+                    example: "Choose high-quality grass seeds suited to your climate, soil type, and intended use (e.g., sun or shade).Look for certified seeds with a high germination rate and low weed content for best results."
+                  resources:
+                    type: array
+                    items:
+                      type: string
+                  _id:
+                    type: string
+                  createdOn:
+                    type: string
+                    example: "2024-04-22T17:01:00.686Z"
+                  updatedAt:
+                    type: string
+                    example: "2024-04-22T17:01:00.686Z"
+            journey_instructions:
+              type: array
+              items:
+                type: object
+                required: [title]
+                properties:
+                  title:
+                    type: string
+                    example: Watering Guidelines
+                  description:
+                    type: string
+                    example: "Choose high-quality grass seeds suited to your climate, soil type, and intended use (e.g., sun or shade).Look for certified seeds with a high germination rate and low weed content for best results."
+                  resources:
+                    type: array
+                    items:
+                      type: string
+                  _id:
+                    type: string
+                    example: 662691f5e90a8cab23d50a69
+                  createdOn:
+                    type: string
+                    example: "2024-04-22T17:01:00.686Z"
+                  updatedAt:
+                    type: string
+                    example: "2024-04-22T17:01:00.686Z"
+            addons:
+              type: array
+              items:
+                type: object
+                required: []
+                properties:
+                  _id:
+                    type: string
+                    example: 662691f5e90a8cab23d50a69
+                  name:
+                    type: string
+                  type:
+                    type: string
+                  createdDate:
+                    type: string
+                    example: "2024-04-22T17:01:00.686Z"
+                  updatedAt:
+                    type: string
+                    example: "2024-04-22T17:01:00.686Z"
+                  __v:
+                    type: string
+            level:
+              type: string
+              description: Level of user
+              example: BEGINNER
+              enum:
+                - EASY
+                - MEDIUM
+                - HARD
+            createdDate:
+              type: string
+              example: "2024-04-22T17:01:00.686Z"
+            updatedAt:
+              type: string
+              example: "2024-04-22T17:01:00.686Z"
+            plant:
+              type: object
+              required: []
+              properties:
+                _id:
+                  type: string
+                  example: 662691f5e90a8cab23d50a69
+                name:
+                  type: string
+                  example: Acacia
+                yieldable:
+                  type: boolean
+                unit:
+                  type: string
+                  example: POUNDS
+                type:
+                  type: string
+                  example: TREE
+                createdDate:
+                  type: string
+                  example: "2024-04-22T17:01:00.686Z"
+                updatedAt:
+                  type: string
+                  example: "2024-04-22T17:01:00.686Z"
+                __v:
+                  type: string
+                  example: 662691f5e90a8cab23d50a69
+        quantity:
+          type: number
+        status:
+          type: string
+          example: IN_PROGRESS
+        level:
+          type: string
+          description: Level of user
+          example: BEGINNER
+          enum:
+            - EASY
+            - MEDIUM
+            - HARD
+        milestones:
+          type: array
+          items:
+            type: string
+        contribution:
+          type: object
+          required: []
+          properties:
+            status:
+              type: string
+            value:
+              type: string
+            _id:
+              type: string
+              example: 662691f5e90a8cab23d50a69
+            createdOn:
+              type: string
+              example: "2024-04-22T17:01:00.686Z"
+            updatedAt:
+              type: string
+              example: "2024-04-22T17:01:00.686Z"
+        createdDate:
+          type: string
+          example: "2024-04-22T17:01:00.686Z"
+        updatedAt:
+          type: string
+          example: "2024-04-22T17:01:00.686Z"
+
+    SignUpResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Sign up successful'
+        user:
+          $ref: '#/components/schemas/User'
+    MileStoneRequest:
+      type: object
+      properties:
+        file:
+          format: binary
+          type: string
+        comment:
+          type: string
+          example: Could not find water resource
+      required:
+        - file
+    LoginResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Logged in Successfully'
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: johndoe@neu.edu
+        password:
+          type: string
+          example: XSCSzaza=
+ 
+      required:
+        - email
+        - password
+
+
+    
+    ErrorStructure:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              example: User friendly message
+            extra:
+              type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: 'Invalid request format'
+      required:
+        - code
+        - message
+    JourneysResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Journey'
