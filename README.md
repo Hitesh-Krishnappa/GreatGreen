@@ -59,10 +59,6 @@ Great-Green is open-source, available under the MIT License, promoting free and 
 # Join the Movement
 Be a part of Great-Green's mission to transform desertified lands into thriving ecosystems. Your involvement can lead to a greener planet and a more sustainable future.
 
-# Team Members
-- Hitesh Krishnappa
-- Bhargav Chickmagalur Nanjundappa
-
 
 # GreatGreen Object Model
 
@@ -212,6 +208,10 @@ classDiagram
   The remaining are end user endpoints which allow user to interact with the application
 
 - The user interface currently allows users to manage their journeys and contribute as well. The backend has more capabilities and functionalities.
+
+# Team Members
+- Hitesh Krishnappa
+- Bhargav Chickmagalur Nanjundappa
 
 ## Further Reading
 - [Desertification and Climate Change](https://www.ipcc.ch/srccl/chapter/chapter-3/)
